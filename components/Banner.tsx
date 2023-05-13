@@ -24,6 +24,7 @@ function Banner({ netflixOriginals }: Props) {
       <div className="absolute top-0 -z-10 left-0 h-[95vh] w-screen ">
         <Image
           src={`${baseUrl}${movie?.backdrop_path || movie?.poster_path}`}
+          alt="img"
           fill
           objectFit="cover"
         />

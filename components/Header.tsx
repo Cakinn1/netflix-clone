@@ -26,6 +26,7 @@ function Header() {
       <div className="flex items-center space-x-2 md:space-x-10">
         <img
           src="https://rb.gy/ulxxee"
+          alt="img"
           width={100}
           height={100}
           className="cursor-pointer object-contain"
@@ -46,7 +47,7 @@ function Header() {
         <Link href="/account">
           <img
             src="https://rb.gy/g1pwyx"
-            alt=""
+            alt="img"
             className="cursor-pointer rounded"
           />
         </Link>
