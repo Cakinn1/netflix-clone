@@ -1,10 +1,14 @@
+import { modalState } from "@/atoms/modalAtom";
 import Banner from "@/components/Banner";
 import Header from "@/components/Header";
+import Modal from "@/components/Modal";
 import Row from "@/components/Row";
+import useAuth from "@/hooks/useAuth";
 import { Movie } from "@/typings";
 import requests from "@/utils/requests";
 import { NextPage } from "next";
 import { Inter } from "next/font/google";
+import { useRecoilValue } from "recoil";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,7 +33,11 @@ function Home({
   topRated,
   trendingNow,
 }: Props) {
-  console.log(netflixOriginals);
+  const { loading } = useAuth()
+  const showModal = useRecoilValue(modalState)
+
+  if(loading) return null
+
   return (
     <div className="relative h-screen bg-gradient-to-b lg:h-[140] ">
       <Header />
@@ -48,6 +56,7 @@ function Home({
           <Row title="Documentaries" movies={documentaries} />
         </section>
       </main>
+     {showModal && <Modal />}
     </div>
   );
 }
