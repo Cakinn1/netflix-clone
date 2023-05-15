@@ -33,13 +33,17 @@ function Home({
   topRated,
   trendingNow,
 }: Props) {
-  const { loading } = useAuth()
-  const showModal = useRecoilValue(modalState)
+  const { loading } = useAuth();
+  const showModal = useRecoilValue(modalState);
 
-  if(loading) return null
+  if (loading) return null;
 
   return (
-    <div className="relative h-screen bg-gradient-to-b lg:h-[140] ">
+    <div
+      className={`relative h-screen bg-gradient-to-b lg:h-[140]${
+        showModal && "!h-screen overflow-hidden"
+      }`}
+    >
       <Header />
       <main className="relative pl-4 pb-24 lg:space-y-24 lg:pl-16">
         <Banner netflixOriginals={netflixOriginals} />
@@ -56,7 +60,7 @@ function Home({
           <Row title="Documentaries" movies={documentaries} />
         </section>
       </main>
-     {showModal && <Modal />}
+      {showModal && <Modal />}
     </div>
   );
 }
