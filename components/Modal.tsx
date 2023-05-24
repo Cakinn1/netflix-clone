@@ -1,10 +1,11 @@
 import { modalState, movieState } from "@/atoms/modalAtom";
 import { Genre, Movie } from "@/typings";
 import {
-  PlayIcon,
   PlusIcon,
   ViewColumnsIcon,
   XMarkIcon,
+  PlayIcon,
+  CheckIcon,
 } from "@heroicons/react/24/solid";
 import { HandThumbUpIcon } from "@heroicons/react/24/outline";
 import MuiModal from "@mui/material/Modal";
@@ -15,14 +16,19 @@ import ReactPlayer from "react-player/lazy";
 import { Play } from "next/font/google";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeMute, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
+import { deleteDoc, doc, setDoc, onSnapshot, DocumentData, } from "firebase/firestore";
+import { db } from "@/firebase";
+import useAuth from "@/hooks/useAuth";
+import  toast, { Toaster } from "react-hot-toast";
 
 function Modal() {
-  const [showModal, setShowModal] = useRecoilState(modalState);
-  const [movie, setMovie] = useRecoilState(movieState);
-  const [trailer, setTrailer] = useState("");
-  const [genres, setGenres] = useState<Genre[]>([]);
-  const [muted, setMuted] = useState(true);
-  const [play, playTrailer] = useState(true);
+  const [movie, setMovie] = useRecoilState(movieState)
+  const [trailer, setTrailer] = useState('')
+  const [showModal, setShowModal] = useRecoilState(modalState)
+  const [muted, setMuted] = useState(true)
+  const [genres, setGenres] = useState<Genre[]>([])
+  const [addedToList, setAddedToList] = useState(false)
+  const { user } = useAuth()
 
   useEffect(() => {
     if (!movie) return;
@@ -52,6 +58,48 @@ function Modal() {
     fetchMovie();
   }, [movie]);
 
+  const toastStyle = {
+    background: 'white',
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: '16px',
+    padding: '15px',
+    borderRadius: '9999px',
+    maxWidth: '1000px',
+  }
+
+  const handleList = async () => {
+    if (addedToList) {
+      await deleteDoc(
+        doc(db, 'customers', user!.uid, 'myList', movie?.id.toString()!)
+      )
+
+      toast(
+        `${movie?.title || movie?.original_name} has been removed from My List`,
+        {
+          duration: 8000,
+          style: toastStyle,
+        }
+      )
+    } else {
+      await setDoc(
+        doc(db, 'customers', user!.uid, 'myList', movie?.id.toString()!),
+        {
+          ...movie,
+        }
+      )
+
+      toast(
+        `${movie?.title || movie?.original_name} has been added to My List.`,
+        {
+          duration: 8000,
+          style: toastStyle,
+        }
+      )
+    }
+  }
+
+// console.log(addedToList)
   const handleClose = () => {
     setShowModal(false);
   };
@@ -62,11 +110,12 @@ function Modal() {
     <MuiModal
       open={showModal}
       onClose={handleClose}
-      className="fixed !top-7 left-0 right-0 
+      className="fixed !top-7 left-0 right-0
     z-50 mx-auto w-full max-w-5xl overflow-hidden overflow-y-scroll rounded-md scrollbar-hide
     "
     >
       <>
+        <Toaster position="bottom-center" />
         <button
           onClick={handleClose}
           className="modalButton absolute right-5 top-5 !z-40 h-9 w-9 border-none bg-[#181818]
@@ -93,14 +142,15 @@ function Modal() {
                 className="flex items-center gap-x-2 rounded bg-white px-8 text-xl
               font-bold text-black transition hover:bg-[#e6e6e6]"
               >
-                <PlayIcon
-                  className="h-7 w-7 text-black"
-                />{" "}
-                Play
+                <PlayIcon className="h-7 w-7 text-black" /> Play
               </button>
 
-              <button className="modalButton">
-                <PlusIcon className="h-7 w-7" />
+              <button className="modalButton" onClick={handleList}>
+                {addedToList ? (
+                  <CheckIcon className="h-7 w-7" />
+                ) : (
+                  <PlusIcon className="h-7 w-7" />
+                )}
               </button>
 
               <button className="modalButton">
