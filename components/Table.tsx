@@ -24,7 +24,7 @@ function Table({ products, selectedPlan }: Props) {
             <td
               key={product.id}
               className={`tableDataFeature ${
-                selectedPlan.id === product.id
+                selectedPlan?.id === product.id
                   ? "text-[#e50914]"
                   : "text-[gray]"
               }`}
