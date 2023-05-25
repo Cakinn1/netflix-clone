@@ -1,7 +1,7 @@
 import { collection, DocumentData, onSnapshot } from 'firebase/firestore'
 import { useEffect, useState } from 'react'
-import { db } from '../firebase'
-import { Movie } from '../typings'
+import { db } from '@/firebase'
+import { Movie } from '@/typings'
 
 function useList(uid: string | undefined) {
   const [list, setList] = useState<DocumentData[] | Movie[]>([])
