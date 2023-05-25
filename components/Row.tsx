@@ -9,6 +9,9 @@ interface Props {
   title: string;
   movies: Movie[] | DocumentData[]
 }
+// fixed bug in https://github
+
+
 
 function Row({ title, movies }: Props) {
   const rowRef = useRef<HTMLDivElement>(null);
