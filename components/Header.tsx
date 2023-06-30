@@ -40,18 +40,18 @@ function Header() {
 
 
         <ul className="hidden space-x-4 md:flex">
-          <li className="headerLink">Home</li>
-          <li className="headerLink">Tv Shows</li>
-          <li className="headerLink">Movies</li>
-          <li className="headerLink">New & Popular</li>
+          <li className="headerLink cursor-not-allowed">Home</li>
+          <li className="headerLink cursor-not-allowed">Tv Shows</li>
+          <li className="headerLink cursor-not-allowed">Movies</li>
+          <li className="headerLink cursor-not-allowed">New & Popular</li>
           <li className="headerLink">My List</li>
         </ul>
       </div>
 
       <div className="flex items-center space-x-4 text-sm font-light">
-        <MagnifyingGlassIcon className="hidden h-6 w-6 sm:inline" />
-        <p className="hidden lg:inline">Kids</p>
-        <BellIcon className="h-6 w-6" />
+        <MagnifyingGlassIcon className="hidden h-6 w-6 sm:inline cursor-not-allowed transition duration-[.4s] hover:text-[#b3b3b3]" />
+        <p className="hidden lg:inline cursor-not-allowed transition duration-[.4s] hover:text-[#b3b3b3]">Kids</p>
+        <BellIcon className="h-6 w-6 cursor-not-allowed transition duration-[.4s] hover:text-[#b3b3b3]" />
         <Link href="/account">
           <img   
             src="https://rb.gy/g1pwyx"

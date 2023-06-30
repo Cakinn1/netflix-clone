@@ -115,8 +115,7 @@ function Modal() {
       );
     }
   }, [db, movie?.id]);
- 
-  
+
   useEffect(
     () =>
       setAddedToList(
@@ -166,9 +165,9 @@ function Modal() {
             <div className="flex space-x-2">
               <button
                 className="flex items-center gap-x-2 rounded bg-white px-8 text-xl
-              font-bold text-black transition hover:bg-[#e6e6e6]"
+              font-bold text-black transition hover:bg-[#e6e6e6]  cursor-not-allowed"
               >
-                <PlayIcon className="h-7 w-7 text-black" /> Play
+                <PlayIcon className="h-7 w-7 text-black " /> Play
               </button>
 
               <button className="modalButton" onClick={handleList}>
@@ -179,7 +178,7 @@ function Modal() {
                 )}
               </button>
 
-              <button className="modalButton">
+              <button className="modalButton cursor-not-allowed">
                 <HandThumbUpIcon className="h-7 w-7" />
               </button>
             </div>

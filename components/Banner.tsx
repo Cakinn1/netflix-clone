@@ -41,7 +41,7 @@ function Banner({ netflixOriginals }: Props) {
       </p>
 
       <div className="flex space-x-3">
-        <button className="bannerButton bg-white text-black">
+        <button className="bannerButton bg-white text-black cursor-not-allowed">
           <PlayIcon className="h-4 w-4 text-black md:h-7 md:w-7" /> Play
         </button>
         <button
@@ -51,7 +51,7 @@ function Banner({ netflixOriginals }: Props) {
             setShowModal(true);
           }}
         >
-          Move Info <InformationCircleIcon className="h-5 w-5 md:h-8 wmd:w-8" />
+          More Info <InformationCircleIcon className="h-5 w-5 md:h-8 wmd:w-8" />
         </button>
       </div>
     </div>
