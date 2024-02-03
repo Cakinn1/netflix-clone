@@ -75,7 +75,7 @@ function Login() {
               {...register("email", { required: login })}
             />
 
-            {errors.email && (
+            {errors.email && login && (
               <p className="p-1 text-[13px] font-light  text-orange-500">
                 Please enter a valid email.
               </p>
@@ -88,7 +88,7 @@ function Login() {
               className="input"
               {...register("password", { required: login })}
             />
-            {errors.password && (
+            {errors.password && login && (
               <p className="p-1 text-[13px] font-light  text-orange-500">
                 Your password must contain between 4 and 60 characters.
               </p>
