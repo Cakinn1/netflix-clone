@@ -11,20 +11,19 @@ interface Inputs {
 
 function Login() {
   const [login, setLogin] = useState(false);
-  const {signIn, signUp} = useAuth()
+  const { signIn, signUp } = useAuth();
   const {
     register,
     handleSubmit,
 
     formState: { errors },
-  } = useForm<Inputs>()
+  } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
     if (login) {
-      await signIn(email, password)
-    }
-    else {
-      await signUp(email,password)
+      await signIn(email, password);
+    } else {
+      await signUp(email, password);
     }
   };
 
@@ -54,17 +53,26 @@ function Login() {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="relative mt-24 space-y-8 rounded bg-black/75 py-10 px-6
+        className="relative mt-24 space-y-4 rounded bg-black/75 py-10 px-6
        md:mt-0 md:max-wd md:px-14"
       >
         <h1 className="text-4xl font-semibold">Sign in</h1>
+        <button
+          className="w-full rounded bg-[#e50914] py-3 font-semibold"
+          onClick={() => {
+            setLogin(true);
+            signIn("guest@gmail.com", "guest123");
+          }}
+        >
+          Sign In As Guest
+        </button>
         <div className="space-y-4">
           <label className="inline-block w-full">
             <input
               type="email"
               placeholder="Email"
               className="input"
-              {...register("email", { required: true })}
+              {...register("email", { required: login })}
             />
 
             {errors.email && (
@@ -78,7 +86,7 @@ function Login() {
               type="password"
               placeholder="Password"
               className="input"
-              {...register("password", { required: true })}
+              {...register("password", { required: login })}
             />
             {errors.password && (
               <p className="p-1 text-[13px] font-light  text-orange-500">

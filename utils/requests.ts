@@ -1,4 +1,8 @@
-const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+import dotenv from "dotenv";
+dotenv.config();
+
+// const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+const API_KEY = '1901ff75a615d5e55fdbf6f3165d44b8'
 const BASE_URL = "https://api.themoviedb.org/3";
 
 const requests = {
