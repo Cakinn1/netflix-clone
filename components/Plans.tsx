@@ -10,22 +10,21 @@ import Table from "./Table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { loadCheckout } from "@/lib/stripe";
 
-
 interface Props {
   products: Product[];
 }
 
 function Plans({ products }: Props) {
   const { logout, user } = useAuth();
-  const [selectedPlan, setSelectedPlan] = useState<Product | null>(products[1])
+  const [selectedPlan, setSelectedPlan] = useState<Product | null>(products[1]);
 
-  const [isBillingLoading, setIsBillingLoading] = useState(false)
+  const [isBillingLoading, setIsBillingLoading] = useState(false);
 
-  function subscribeToPlan () {
-    if (!user) return 
-    
-    loadCheckout(selectedPlan?.prices[0].id!)
-    setIsBillingLoading(true)
+  function subscribeToPlan() {
+    if (!user) return;
+
+    loadCheckout(selectedPlan?.prices[0].id!);
+    setIsBillingLoading(true);
   }
 
   return (
@@ -60,10 +59,15 @@ function Plans({ products }: Props) {
         <div className="mt-4 flex flex-col space-y-4">
           <div className="flex w-full items-center justify-end self-end md:w-3/5">
             {products.map((product) => (
-                <div key={product.id} className={`planBox ${selectedPlan?.id === product.id ? "opacity-100" : "opacity-60"}`}
-                onClick={() => setSelectedPlan(product)}>
-                    {product.name}
-                </div>
+              <div
+                key={product.id}
+                className={`planBox ${
+                  selectedPlan?.id === product.id ? "opacity-100" : "opacity-60"
+                }`}
+                onClick={() => setSelectedPlan(product)}
+              >
+                {product.name}
+              </div>
             ))}
           </div>
           <Table products={products} selectedPlan={selectedPlan} />
@@ -71,20 +75,16 @@ function Plans({ products }: Props) {
           <button
             disabled={!selectedPlan || isBillingLoading}
             className={`mx-auto w-11/12 rounded bg-[#E50914] py-4 text-xl shadow hover:bg-[#f6121d] md:w-[420px] ${
-              isBillingLoading && 'opacity-60'
+              isBillingLoading && "opacity-60"
             }`}
             onClick={subscribeToPlan}
           >
             {isBillingLoading ? (
               <Loader color="dark:fill-gray-300" />
             ) : (
-              'Subscribe'
+              "Subscribe"
             )}
           </button>
-          
-         
-
-    
         </div>
       </main>
     </div>

@@ -1,7 +1,7 @@
 import useAuth from "@/hooks/useAuth";
 import Head from "next/head";
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 interface Inputs {
@@ -11,16 +11,21 @@ interface Inputs {
 
 function Login() {
   const [login, setLogin] = useState(false);
+  const [guestLogin, setGuestLogin] = useState(false);
   const { signIn, signUp } = useAuth();
   const {
     register,
     handleSubmit,
-
+    setValue,
     formState: { errors },
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
-    if (login) {
+    if (guestLogin) {
+      await signIn("guest@gmail.com", "guest123");
+      setValue("email", "guest@gmail.com");
+      setValue("password", "guest123");
+    } else if (login) {
       await signIn(email, password);
     } else {
       await signUp(email, password);
@@ -60,8 +65,8 @@ function Login() {
         <button
           className="w-full rounded bg-[#e50914] py-3 font-semibold"
           onClick={() => {
-            setLogin(true);
-            signIn("guest@gmail.com", "guest123");
+            // setLogin(true);
+            setGuestLogin(true);
           }}
         >
           Sign In As Guest

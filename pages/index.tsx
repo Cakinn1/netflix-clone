@@ -42,17 +42,15 @@ function Home({
   trendingNow,
   products,
 }: Props) {
-
   const { loading, user } = useAuth();
   const showModal = useRecoilValue(modalState);
-  const subscription = useSubscription(user)
-  const movie = useRecoilValue(movieState)
+  const subscription = useSubscription(user);
+  const movie = useRecoilValue(movieState);
   const list = useList(user?.uid);
-
 
   if (loading || subscription === null) return null;
 
-  if (!subscription) return <Plans products={products}/>
+  if (!subscription) return <Plans products={products} />;
 
   return (
     <div
@@ -73,10 +71,7 @@ function Home({
           <Row title="Top Rated" movies={topRated} />
           <Row title="Action Thrillers" movies={actionMovies} />
 
-       
-       {list.length > 0 && <Row title="My List" movies={list} />}
-          
-
+          {list.length > 0 && <Row title="My List" movies={list} />}
           <Row title="Comedies" movies={comedyMovies} />
           <Row title="Scary Movies" movies={horrorMovies} />
           <Row title="Romance Movies" movies={romanceMovies} />

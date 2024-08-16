@@ -13,6 +13,7 @@ function Thumbnail({ movie }: Props) {
   const [showModal, setShowModal] = useRecoilState(modalState);
   const [currentMovie, setCurrentMovie] = useRecoilState(movieState);
 
+
   return (
     <div
       className="relative h-28 min-w-[180px] cursor-pointer transition 

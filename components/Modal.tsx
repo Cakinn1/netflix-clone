@@ -9,7 +9,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { HandThumbUpIcon } from "@heroicons/react/24/outline";
 import MuiModal from "@mui/material/Modal";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Element } from "@/typings";
 import ReactPlayer from "react-player/lazy";
@@ -27,6 +27,7 @@ import {
 import { db } from "@/firebase";
 import useAuth from "@/hooks/useAuth";
 import toast, { Toaster } from "react-hot-toast";
+import Loader from "./Loader";
 
 function Modal() {
   const [movie, setMovie] = useRecoilState(movieState);
@@ -37,6 +38,7 @@ function Modal() {
   const [addedToList, setAddedToList] = useState(false);
   const { user } = useAuth();
   const [movies, setMovies] = useState<DocumentData[] | Movie[]>([]);
+  const [isTrailerReady, setIsTrailerReady] = useState(false);
 
   useEffect(() => {
     if (!movie) return;
@@ -124,12 +126,9 @@ function Modal() {
     [movies]
   );
 
-  // console.log(addedToList)
   const handleClose = () => {
     setShowModal(false);
   };
-
-  console.log(trailer);
 
   return (
     <MuiModal
@@ -154,10 +153,16 @@ function Modal() {
             url={`https://www.youtube.com/watch?v=${trailer}`}
             width="100%"
             height="100%"
+            onReady={() => setIsTrailerReady(true)}
             style={{ position: "absolute", top: "0", left: "0" }}
             playing
             muted={muted}
           />
+          {!isTrailerReady && (
+            <div className="bg-black h-[100%] rounded-t-md flex justify-center items-center absolute top-0 left-0 w-[100%]">
+              <Loader color="dark:fill-[#e50914]" />
+            </div>
+          )}
           <div
             className="absolute bottom-10 flex w-full items-center justify-between
           px-10"
@@ -195,7 +200,7 @@ function Modal() {
           <div className="space-y-6 text-lg">
             <div className="flex items-center space-x-2 text-sm">
               <p className="font-semibold text-green-400">
-                {movie!.vote_average * 10}% Match
+                {(movie!.vote_average * 10).toFixed(2)}% Match
               </p>
               <p className="font-light">
                 {movie?.release_date || movie?.first_air_date}
